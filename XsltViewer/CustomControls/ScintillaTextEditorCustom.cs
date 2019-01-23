@@ -443,31 +443,23 @@ namespace XsltViewer
 
         private void BwXmlFormat_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Text = e.Result?.ToString();
-            RefreshUndoRedoButton();
+            if (e.Error != null)
+            {
+                ShowMessage?.Invoke(e.Error.Message);
+            }
+            else
+            {
+                Text = e.Result?.ToString();
+                RefreshUndoRedoButton();
+            }
+
             ClearAllSelections(XmlFormatButton.GetCurrentParent());
             EnableControls?.Invoke(true);
         }
 
         private void BwXmlFormat_DoWork(object sender, DoWorkEventArgs e)
         {
-            string text = e.Argument.ToString();
-            foreach (int counter in Enumerable.Range(0, 2))
-            {
-                try
-                {
-                    string xml = (counter == 0)
-                        ? text
-                        : $"<!-- items and item nodes are inserted only for formatting output --><items>{text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Aggregate(string.Empty, (t, y) => $"{t}<item>{y}</item>")}</items><!-- -->";
-                    text = XDocument.Parse(xml).ToString();
-                    break;
-                }
-                catch (Exception)
-                {
-                }
-            }
-
-            e.Result = text;
+            e.Result = XDocument.Parse(e.Argument.ToString()).ToString();
         }
     }
 }
