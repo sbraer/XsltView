@@ -31,14 +31,14 @@ namespace XsltViewer
             // Reset the styles
             scintilla.StyleResetDefault();
             scintilla.Styles[Style.Default].Font = "Consolas";
-            scintilla.Styles[Style.Default].Size = 11;
+            scintilla.Styles[Style.Default].Size = 10;
             scintilla.StyleClearAll();
 
             // Set the XML Lexer
             scintilla.Lexer = Lexer.Xml;
 
             // Show line numbers
-            scintilla.Margins[0].Width = 20;
+            scintilla.Margins[0].Width = 35;
 
             // Enable folding
             scintilla.SetProperty("fold", "1");
