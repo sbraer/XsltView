@@ -162,6 +162,7 @@ namespace XsltViewer
 			this.TxtXml.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.TxtXml.Filters = "XML file|*.xml|All files|*.*";
 			this.TxtXml.FindButton = this.XmlFindButton;
+			this.TxtXml.Lexer = ScintillaNET.Lexer.Xml;
 			this.TxtXml.LoadButton = this.OpenXmlButton;
 			this.TxtXml.Location = new System.Drawing.Point(3, 28);
 			this.TxtXml.Name = "TxtXml";
@@ -378,6 +379,7 @@ namespace XsltViewer
 			this.TxtXslt.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.TxtXslt.Filters = "XSLT file|*.xsl*|All files|*.*";
 			this.TxtXslt.FindButton = this.ToolStripXsltFind;
+			this.TxtXslt.Lexer = ScintillaNET.Lexer.Xml;
 			this.TxtXslt.LoadButton = this.OpenToolStripButtonXslt;
 			this.TxtXslt.Location = new System.Drawing.Point(3, 28);
 			this.TxtXslt.Name = "TxtXslt";
@@ -563,6 +565,7 @@ namespace XsltViewer
 			this.TxtOutput.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.TxtOutput.Filters = "CSV file|*.csv|Text file|*.txt|All files|*.*";
 			this.TxtOutput.FindButton = this.ToolStripOutputFind;
+			this.TxtOutput.Lexer = ScintillaNET.Lexer.Xml;
 			this.TxtOutput.LoadButton = this.OpenToolStripButtonOutput;
 			this.TxtOutput.Location = new System.Drawing.Point(3, 28);
 			this.TxtOutput.Name = "TxtOutput";

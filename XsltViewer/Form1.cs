@@ -1,6 +1,7 @@
 ﻿using ScintillaNET;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -20,6 +21,16 @@ namespace XsltViewer
             _xsltTransformation = xsltTransformation;
             InitializeComponent();
             Icon = Resource1.Icon1;
+
+            TxtXml.Lexer = Lexer.Xml;
+            TxtXml.Styles[Style.Xml.Tag].ForeColor = Color.FromArgb(0, 64, 0);
+            TxtXml.Styles[Style.Xml.Attribute].ForeColor = Color.FromArgb(128, 0, 0);
+            TxtXml.Styles[Style.Xml.Default].ForeColor = Color.FromArgb(0, 0, 255);
+
+            TxtXslt.Lexer = Lexer.Xml;
+            TxtXslt.Styles[Style.Xml.Tag].ForeColor = Color.FromArgb(0, 64, 0);
+            TxtXslt.Styles[Style.Xml.Attribute].ForeColor = Color.FromArgb(128, 0, 0);
+            TxtXslt.Styles[Style.Xml.Default].ForeColor = Color.FromArgb(0, 0, 255);
         }
 
         private DialogResult ShowMessageBox(string text, string title = "Error", MessageBoxButtons messageBoxButtons = MessageBoxButtons.OK, MessageBoxIcon messageBoxIcon = MessageBoxIcon.Error)
