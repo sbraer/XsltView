@@ -285,9 +285,12 @@ namespace XsltViewer
 				EnableControls?.Invoke(false);
 				try
 				{
-					using (var reader = File.OpenText(files[0]))
+					using (var stream = new FileStream(files[0], FileMode.Open, FileAccess.Read, FileShare.Read))
 					{
-						Text = await reader.ReadToEndAsync();
+						using (var sr = new StreamReader(stream, Encoding.UTF8, true))
+						{
+							Text = await sr.ReadToEndAsync();
+						}
 					}
 				}
 				catch
@@ -322,10 +325,14 @@ namespace XsltViewer
 					try
 					{
 						EnableControls?.Invoke(false);
-						using (var reader = File.OpenText(openFileDialog1.FileName))
+						using (var stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
 						{
-							Text = await reader.ReadToEndAsync();
+							using (var sr = new StreamReader(stream, Encoding.UTF8, true))
+							{
+								Text = await sr.ReadToEndAsync();
+							}
 						}
+
 					}
 					catch (Exception ex)
 					{
