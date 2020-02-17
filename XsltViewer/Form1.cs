@@ -120,6 +120,7 @@ namespace XsltViewer
             _controlsListBlockable = GetAll(this).Where(t => t.Tag?.ToString() == "blockable").ToList();
         }
 
+        //
         private void BtnTransform_Click(object sender, EventArgs e)
         {
             EnableControls(false);
@@ -127,11 +128,44 @@ namespace XsltViewer
             BwTransform.RunWorkerAsync(pars);
         }
 
+        private void BwTransform_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            var pars = ((string xml, string xslt))e.Argument;
+            string xml = pars.xml;
+            string xslt = pars.xslt;
+            string newContent = _xsltTransformation?.TransformXsltFromString(xml, xslt, null);
+            e.Result = string.IsNullOrEmpty(newContent) ? "No output" : newContent;
+        }
+
+        private void BwTransform_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            TxtOutput.Text = (e.Error != null) ? e.Error.Message : e.Result?.ToString();
+            TxtOutput.RefreshUndoRedoButton();
+            EnableControls(true);
+        }
+
+
         private void BtnXpath_Click(object sender, EventArgs e)
         {
             EnableControls(false);
             var pars = (xml: TxtXml.Text, xpath: TxtXPath.Text);
             BwXPath.RunWorkerAsync(pars);
+        }
+
+        private void BwXPath_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            var pars = ((string xml, string xpath))e.Argument;
+            string xml = pars.xml;
+            string xpath = pars.xpath;
+            string newContent = _xsltTransformation?.EvaluateXPath(xml, xpath);
+            e.Result = string.IsNullOrEmpty(newContent) ? "No output" : newContent;
+        }
+
+        private void BwXPath_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            TxtOutput.Text = (e.Error != null) ? e.Error.Message.ToString() : e.Result?.ToString();
+            TxtOutput.RefreshUndoRedoButton();
+            EnableControls(true);
         }
 
         private void ToolStripMinificationButton_Click(object sender, EventArgs e)
@@ -164,72 +198,6 @@ namespace XsltViewer
             BwSearchXPath.RunWorkerAsync(pars);
         }
 
-        private void TxtXPath_DoubleClick(object sender, EventArgs e)
-        {
-            TxtXPath.SelectAll();
-        }
-        public void ClearAllSelections(ToolStrip toolStrip)
-        {
-            // Call private method using reflection
-            MethodInfo method = typeof(ToolStrip).GetMethod("ClearAllSelections", BindingFlags.NonPublic | BindingFlags.Instance);
-            method?.Invoke(toolStrip, null);
-        }
-
-        private void BwMiniXml_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            string xmlContent = e.Argument.ToString();
-            e.Result = _xsltTransformation?.XmlMinification(xmlContent);
-        }
-
-        private void BwMiniXml_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            if (e.Error != null)
-            {
-                TxtOutput.Text = e.Error.Message;
-                TxtOutput.RefreshUndoRedoButton();
-            }
-            else
-            {
-                TxtXml.Text = e.Result?.ToString();
-                TxtXml.RefreshUndoRedoButton();
-            }
-
-            ClearAllSelections(XmlMiniButton.GetCurrentParent());
-            EnableControls(true);
-        }
-
-        private void BwXPath_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            var pars = ((string xml, string xpath))e.Argument;
-            string xml = pars.xml;
-            string xpath = pars.xpath;
-            string newContent = _xsltTransformation?.EvaluateXPath(xml, xpath);
-            e.Result = string.IsNullOrEmpty(newContent) ? "No output" : newContent;
-        }
-
-        private void BwXPath_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            TxtOutput.Text = (e.Error != null) ? e.Error.Message.ToString() : e.Result?.ToString();
-            TxtOutput.RefreshUndoRedoButton();
-            EnableControls(true);
-        }
-
-        private void BwTransform_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            var pars = ((string xml, string xslt))e.Argument;
-            string xml = pars.xml;
-            string xslt = pars.xslt;
-            string newContent = _xsltTransformation?.TransformXsltFromString(xml, xslt, null);
-            e.Result = string.IsNullOrEmpty(newContent) ? "No output" : newContent;
-        }
-
-        private void BwTransform_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            TxtOutput.Text = (e.Error != null) ? e.Error.Message : e.Result?.ToString();
-            TxtOutput.RefreshUndoRedoButton();
-            EnableControls(true);
-        }
-
         private void BwSearchXPath_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             var pars = ((string xmlContent, int column, int row))e.Argument;
@@ -258,6 +226,41 @@ namespace XsltViewer
             }
 
             ClearAllSelections(ToolStrip1);
+            EnableControls(true);
+        }
+
+        private void TxtXPath_DoubleClick(object sender, EventArgs e)
+        {
+            TxtXPath.SelectAll();
+        }
+
+        public void ClearAllSelections(ToolStrip toolStrip)
+        {
+            // Call private method using reflection
+            MethodInfo method = typeof(ToolStrip).GetMethod("ClearAllSelections", BindingFlags.NonPublic | BindingFlags.Instance);
+            method?.Invoke(toolStrip, null);
+        }
+
+        private void BwMiniXml_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            string xmlContent = e.Argument.ToString();
+            e.Result = _xsltTransformation?.XmlMinification(xmlContent);
+        }
+
+        private void BwMiniXml_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                TxtOutput.Text = e.Error.Message;
+                TxtOutput.RefreshUndoRedoButton();
+            }
+            else
+            {
+                TxtXml.Text = e.Result?.ToString();
+                TxtXml.RefreshUndoRedoButton();
+            }
+
+            ClearAllSelections(XmlMiniButton.GetCurrentParent());
             EnableControls(true);
         }
 
