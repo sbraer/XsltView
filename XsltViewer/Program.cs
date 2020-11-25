@@ -21,7 +21,8 @@ namespace XsltViewer
             Application.SetCompatibleTextRenderingDefault(false);
 
             var xpathDialog = new XPathForm();
-            var form1 = new Form1(xpathDialog, new XsltTransformation());
+            var importJson = new ImportJson();
+            var form1 = new Form1(xpathDialog, importJson, new XsltTransformation());
             Application.Run(form1);
         }
     }

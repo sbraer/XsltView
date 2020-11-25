@@ -52,6 +52,8 @@ namespace XsltViewer
 			this.XmlMiniButton = new System.Windows.Forms.ToolStripButton();
 			this.ToolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
 			this.ToolStripSearchXPath = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+			this.xmlImportJson = new System.Windows.Forms.ToolStripButton();
 			this.TableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.TxtXslt = new XsltViewer.ScintillaTextEditorCustom();
 			this.CopyXsltButton = new System.Windows.Forms.ToolStripButton();
@@ -272,9 +274,9 @@ namespace XsltViewer
 			this.XmlFormatXmlButton.Image = ((System.Drawing.Image)(resources.GetObject("XmlFormatXmlButton.Image")));
 			this.XmlFormatXmlButton.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.XmlFormatXmlButton.Name = "XmlFormatXmlButton";
-			this.XmlFormatXmlButton.Size = new System.Drawing.Size(73, 22);
+			this.XmlFormatXmlButton.Size = new System.Drawing.Size(49, 22);
 			this.XmlFormatXmlButton.Tag = "";
-			this.XmlFormatXmlButton.Text = "Xml Format";
+			this.XmlFormatXmlButton.Text = "Format";
 			// 
 			// ToolStrip1
 			// 
@@ -295,7 +297,9 @@ namespace XsltViewer
             this.ToolStripSeparator7,
             this.XmlMiniButton,
             this.ToolStripSeparator9,
-            this.ToolStripSearchXPath});
+            this.ToolStripSearchXPath,
+            this.toolStripSeparator14,
+            this.xmlImportJson});
 			this.ToolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.ToolStrip1.Name = "ToolStrip1";
 			this.ToolStrip1.Size = new System.Drawing.Size(464, 25);
@@ -350,9 +354,24 @@ namespace XsltViewer
 			this.ToolStripSearchXPath.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripSearchXPath.Image")));
 			this.ToolStripSearchXPath.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ToolStripSearchXPath.Name = "ToolStripSearchXPath";
-			this.ToolStripSearchXPath.Size = new System.Drawing.Size(74, 22);
-			this.ToolStripSearchXPath.Text = "Show XPath";
+			this.ToolStripSearchXPath.Size = new System.Drawing.Size(42, 22);
+			this.ToolStripSearchXPath.Text = "XPath";
 			this.ToolStripSearchXPath.Click += new System.EventHandler(this.ToolStripSearchXPath_Click);
+			// 
+			// toolStripSeparator14
+			// 
+			this.toolStripSeparator14.Name = "toolStripSeparator14";
+			this.toolStripSeparator14.Size = new System.Drawing.Size(6, 25);
+			// 
+			// xmlImportJson
+			// 
+			this.xmlImportJson.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.xmlImportJson.Image = ((System.Drawing.Image)(resources.GetObject("xmlImportJson.Image")));
+			this.xmlImportJson.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.xmlImportJson.Name = "xmlImportJson";
+			this.xmlImportJson.Size = new System.Drawing.Size(78, 22);
+			this.xmlImportJson.Text = "Import JSON";
+			this.xmlImportJson.Click += new System.EventHandler(this.xmlImportJson_Click);
 			// 
 			// TableLayoutPanel3
 			// 
@@ -674,8 +693,8 @@ namespace XsltViewer
 			this.ToolStripXmlFormatOutput.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripXmlFormatOutput.Image")));
 			this.ToolStripXmlFormatOutput.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.ToolStripXmlFormatOutput.Name = "ToolStripXmlFormatOutput";
-			this.ToolStripXmlFormatOutput.Size = new System.Drawing.Size(73, 22);
-			this.ToolStripXmlFormatOutput.Text = "Xml Format";
+			this.ToolStripXmlFormatOutput.Size = new System.Drawing.Size(49, 22);
+			this.ToolStripXmlFormatOutput.Text = "Format";
 			// 
 			// ToolStrip3
 			// 
@@ -976,6 +995,8 @@ namespace XsltViewer
         private System.ComponentModel.BackgroundWorker BwTransform;
         private System.ComponentModel.BackgroundWorker BwSearchXPath;
         private Button BtPasteXPath;
-    }
+		private ToolStripSeparator toolStripSeparator14;
+		private ToolStripButton xmlImportJson;
+	}
 }
 

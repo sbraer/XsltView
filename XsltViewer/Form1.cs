@@ -13,11 +13,13 @@ namespace XsltViewer
     {
         private readonly IXsltTransformation _xsltTransformation;
         private readonly XPathForm _xpathDialog;
+        private readonly ImportJson _importJson;
         private List<Control> _controlsListBlockable;
         private Form1() { }
-        public Form1(XPathForm xpathDialog, IXsltTransformation xsltTransformation)
+        public Form1(XPathForm xpathDialog, ImportJson importJson, IXsltTransformation xsltTransformation)
         {
             _xpathDialog = xpathDialog;
+            _importJson = importJson;
             _xsltTransformation = xsltTransformation;
             InitializeComponent();
             Icon = Resource1.Icon1;
@@ -267,6 +269,20 @@ namespace XsltViewer
         private void BtPasteXPath_Click(object sender, EventArgs e)
         {
             TxtXPath.Text = Clipboard.GetText();
+        }
+
+		private void xmlImportJson_Click(object sender, EventArgs e)
+		{
+            EnableControls(false);
+            _importJson.ShowDialog();
+            if (_importJson.XmlImported != null)
+			{
+                TxtXml.Text = _importJson.XmlImported;
+                TxtXml.RefreshUndoRedoButton();
+			}
+
+            ClearAllSelections(xmlImportJson.GetCurrentParent());
+            EnableControls(true);
         }
     }
 }
